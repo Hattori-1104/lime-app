@@ -1,7 +1,7 @@
 import { ActionFunctionArgs } from "@remix-run/node"
-import { Form, redirect, useLoaderData } from "@remix-run/react"
+import { Form, redirect, useLoaderData, useNavigate } from "@remix-run/react"
 import { Send } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Message } from "~/components/message"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
@@ -23,6 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	}
 	await repository.createMessage(name, message)
 	push(message, name)
+	fetch("http://localhost:3000/update")
 	return redirect("/")
 }
 
@@ -30,6 +31,19 @@ export default function Index() {
 	const [name, setName] = useState("")
 	const [message, setMessage] = useState("")
 	const { messages } = useLoaderData<typeof loader>()
+
+	const navigate = useNavigate()
+	useEffect(() => {
+		const ws = new WebSocket("ws://localhost:3001")
+		ws.onopen = () => {
+			ws.onmessage = (event) => {
+				if (event.data === "updated") {
+					navigate("/")
+				}
+			}
+		}
+	}, [navigate])
+
 	return (
 		<div className="flex flex-col items-center justify-center h-screen gap-4 max-w-96 p-4 mx-auto">
 			<ScrollArea className="w-full grow border rounded-md">

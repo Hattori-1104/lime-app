@@ -1,5 +1,4 @@
-import { ActionFunctionArgs } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { ActionFunctionArgs, json } from "@remix-run/node"
 import { repository } from "~/service.server/repository"
 
 export const action = async ({ request }: ActionFunctionArgs) => {

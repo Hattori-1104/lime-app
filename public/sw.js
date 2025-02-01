@@ -5,7 +5,6 @@ self.addEventListener("push", (event) => {
 
 	event.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
 		const isControlled = clients.some((client) => client.visibilityState === "visible")
-		console.log(isControlled)
 		if (!isControlled) {
 			return self.registration.showNotification("LIME", options)
 		}
