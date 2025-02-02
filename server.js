@@ -1,10 +1,18 @@
 import { createRequestHandler } from "@remix-run/express"
 import * as build from "./build/server/index.js"
 import express from "express"
-
+import dotenv from "dotenv"
 import { WebSocketServer } from "ws"
 
-const wss = new WebSocketServer({ port: 3001 })
+dotenv.config()
+
+const PORT = 3000
+const WS_PORT = 3000
+
+const wss = new WebSocketServer({
+	port: WS_PORT,
+	perMessageDeflate: false
+})
 
 const webSocketClients = new Set()
 
@@ -29,6 +37,6 @@ app.get("/update", (req, res) => {
 app.use(express.static("build/client"))
 app.all("*", createRequestHandler({ build }))
 
-app.listen(3000, () => {
-	console.log("Server is running on port 3000")
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`)
 })

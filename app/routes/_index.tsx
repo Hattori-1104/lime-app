@@ -23,7 +23,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	}
 	await repository.createMessage(name, message)
 	push(message, name)
-	fetch("http://localhost:3000/update")
+	fetch("https://lime-app-5h8c.onrender.com/update")
 	return redirect("/")
 }
 
@@ -34,7 +34,7 @@ export default function Index() {
 
 	const navigate = useNavigate()
 	useEffect(() => {
-		const ws = new WebSocket("wss://lime-app-5h8c.onrender.com:3001")
+		const ws = new WebSocket("wss://lime-app-5h8c.onrender.com")
 		ws.onopen = () => {
 			ws.onmessage = (event) => {
 				if (event.data === "updated") {
