@@ -1,10 +1,7 @@
 import { createRequestHandler } from "@remix-run/express"
 import * as build from "./build/server/index.js"
 import express from "express"
-import dotenv from "dotenv"
 import { WebSocketServer } from "ws"
-
-dotenv.config()
 
 const PORT = 3000
 const WS_PORT = 3000
