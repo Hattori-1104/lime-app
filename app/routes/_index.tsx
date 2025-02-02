@@ -34,7 +34,7 @@ export default function Index() {
 
 	const navigate = useNavigate()
 	useEffect(() => {
-		const ws = new WebSocket("ws://localhost:3001")
+		const ws = new WebSocket("wss://localhost:3001")
 		ws.onopen = () => {
 			ws.onmessage = (event) => {
 				if (event.data === "updated") {
